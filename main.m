@@ -1,4 +1,5 @@
-global a_1 a_2 a_3 b_1 b_2 b_3 c_1 c_2 c_3
+global a_1 a_2 a_3 b_1 b_2 b_3 c_1 c_2 c_3;
+
 
 % Germany
 a_1 = 0.0142;
@@ -12,11 +13,12 @@ c_2 = 0.0698;
 c_3 = 0.1517;
 tspan = [0 100];
 
-
+global up;
+up = [-9 -4 -20];
 syms x y z
-equations = [a_1*x*(1-x)+a_2*x*z/(1+z)+a_3*x*y == 0,...
-    b_1*y*(1-y)+b_2*y*z/(1+z)+b_3*x*y == 0, ...
-    c_1*z*(1-z)+c_2*x*z/(1+x)+c_3*z*y/(1+y) == 0];
+equations = [a_1*x*(1-x)+a_2*x*z/(1+z)+a_3*x*y + up(1) == 0,...
+    b_1*y*(1-y)+b_2*y*z/(1+z)+b_3*x*y + up(2) == 0, ...
+    c_1*z*(1-z)+c_2*x*z/(1+x)+c_3*z*y/(1+y) + up(3) == 0];
 solutions = solve(equations, [x y z]);
 
 for i = 1:length(solutions.x)
