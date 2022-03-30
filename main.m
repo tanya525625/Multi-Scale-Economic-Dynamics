@@ -14,16 +14,16 @@ c_3 = 0.1517;
 tspan = [0 100];
 
 global up;
-up = [-9 -4 -20];
+up = [-100 -5 -100];
 syms x y z
 equations = [a_1*x*(1-x)+a_2*x*z/(1+z)+a_3*x*y + up(1) == 0,...
     b_1*y*(1-y)+b_2*y*z/(1+z)+b_3*x*y + up(2) == 0, ...
     c_1*z*(1-z)+c_2*x*z/(1+x)+c_3*z*y/(1+y) + up(3) == 0];
 solutions = solve(equations, [x y z]);
 
-for i = 1:length(solutions.x)
+for i = 12:length(solutions.x)
     % equilibrium point 
-    x0 = [double(solutions.x(i)), double(solutions.y(i)), double(solutions.z(i))];
+    x0 = [double(solutions.x(i)), double(solutions.y(i)), double(solutions.z(i))]
     [x,fval,exitflag,output,jacobian] = fsolve(@equation, x0);
 
     % Stability analysis
@@ -31,6 +31,7 @@ for i = 1:length(solutions.x)
 
     % Runge-Kutta
     [t,y] = ode45(@model, tspan, x0);
+    plot(t, y)
 
     % Plot making
     make_phase_plot(y, x0, 'phase plot for ode45')
